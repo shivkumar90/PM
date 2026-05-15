@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>V. Shiv Kumar — Senior AI Product Manager</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --border: #1e1e1e;
+      --accent: #c8a96e;
+      --accent2: #7eb8c8;
+      --text: #e8e4dc;
+      --muted: #6b6660;
+      --tag-bg: #1a1a1a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Noise overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 3rem;
+      backdrop-filter: blur(14px);
+      background: rgba(10,10,10,0.75);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.4rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 8rem 3rem 4rem;
+      gap: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-circle {
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,169,110,0.07) 0%, transparent 70%);
+      right: -100px; top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .hero-bg-line {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--border), transparent);
+      left: 50%;
+    }
+
+    .hero-left { position: relative; z-index: 1; }
+
+    .hero-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.2s forwards;
+    }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.2rem, 6vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.35s forwards;
+    }
+
+    .hero-name span { color: var(--accent); font-weight: 600; }
+
+    .hero-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.5s forwards;
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      color: #a09890;
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.65s forwards;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.8s forwards;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.8rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.25s;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #0a0a0a;
+      border: 1px solid var(--accent);
+    }
+    .btn-primary:hover { background: transparent; color: var(--accent); }
+
+    .btn-outline {
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: transparent;
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    .hero-right {
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      animation: fadeIn 1s ease 0.9s forwards;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .stat-box {
+      background: var(--surface);
+      padding: 2rem;
+      transition: background 0.25s;
+    }
+    .stat-box:hover { background: #161616; }
+
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 600;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── SECTION BASE ── */
+    section {
+      padding: 6rem 3rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── EXPERIENCE ── */
+    .experience-list { display: flex; flex-direction: column; gap: 0; }
+
+    .exp-item {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 3rem;
+      padding: 2.5rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+
+    .exp-item:last-child { border-bottom: none; }
+
+    .exp-meta { padding-top: 0.2rem; }
+
+    .exp-period {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .exp-company {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+    }
+
+    .exp-role {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .exp-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .exp-bullets li {
+      font-size: 0.9rem;
+      color: #a09890;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+
+    .exp-bullets li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.7rem;
+    }
+
+    .exp-highlight {
+      display: inline;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--surface); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .skill-category {
+      background: var(--bg);
+      padding: 2rem;
+    }
+
+    .skill-cat-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .skill-tag {
+      padding: 0.3rem 0.75rem;
+      border: 1px solid var(--border);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+
+    .skill-tag:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(200,169,110,0.05);
+    }
+
+    /* ── CERTIFICATIONS ── */
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1rem;
+    }
+
+    .cert-card {
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      background: var(--surface);
+      transition: border-color 0.25s, transform 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cert-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .cert-card:hover { border-color: var(--accent); transform: translateX(4px); }
+    .cert-card:hover::before { opacity: 1; }
+
+    .cert-name {
+      font-size: 0.92rem;
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+      color: var(--text);
+    }
+
+    .cert-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--surface);
+      text-align: center;
+    }
+
+    .contact-inner { max-width: 600px; margin: 0 auto; }
+
+    .contact-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .contact-tagline em { color: var(--accent); font-style: normal; }
+
+    .contact-sub {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+      transition: all 0.2s;
+    }
+
+    .contact-link:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 3rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-copy {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      #hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; }
+      .hero-bg-line { display: none; }
+      section { padding: 4rem 1.5rem; }
+      .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">V. Shiv Kumar</div>
+    <ul class="nav-links">
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#certifications">Certifications</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg-circle"></div>
+    <div class="hero-bg-line"></div>
+    <div class="hero-left">
+      <p class="hero-label">Senior AI Product Manager · GTM Systems</p>
+      <h1 class="hero-name">V. <span>Shiv</span><br>Kumar</h1>
+      <p class="hero-title">MongoDB · UKG · Accenture · 12+ Years</p>
+      <p class="hero-desc">
+        Product leader specialising in AI-powered GTM platforms, CRM strategy, and sales lifecycle optimisation — delivering measurable revenue growth and operational efficiency at global scale.
+      </p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn btn-primary">Get in Touch</a>
+        <a href="#experience" class="btn btn-outline">View Work</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-number">12+</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">1K+</div>
+          <div class="stat-label">Hours Saved Quarterly</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">$500K</div>
+          <div class="stat-label">Annual Savings Delivered</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">35%</div>
+          <div class="stat-label">Tech Sprawl Reduction</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Experience</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="experience-list">
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-period">Jun 2022 — Present</div>
+          <div class="exp-company">MongoDB</div>
+        </div>
+        <div class="exp-content">
+          <h3 class="exp-role">Senior Product Manager</h3>
+          <ul class="exp-bullets">
+            <li>Led GTM strategy and roadmap execution, designing persona-aware workflows and unified UI experiences for <span class="exp-highlight">1,000+ global sales &amp; CS users</span>.</li>
+            <li>Deployed AI and automation solutions that eliminated redundant tasks, saving <span class="exp-highlight">1,000+ work hours per quarter</span>.</li>
+            <li>Drove Salesforce CRM adoption via A/B testing and iterative releases, increasing platform usage <span class="exp-highlight">by 10%</span> across global teams.</li>
+            <li>Reduced tech sprawl across GTM, Marketing &amp; Legal by <span class="exp-highlight">~35%</span>, saving over <span class="exp-highlight">$500K annually</span>.</li>
+            <li>Redesigned post-sales handoff process, improving CSAT and cutting handoff error rates.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-period">Mar 2019 — Jun 2022</div>
+          <div class="exp-company">Ultimate Kronos Group (UKG)</div>
+        </div>
+        <div class="exp-content">
+          <h3 class="exp-role">Lead Business Systems Analyst</h3>
+          <ul class="exp-bullets">
+            <li>Improved case resolution rates by <span class="exp-highlight">20%</span> through process redesign and tooling improvements.</li>
+            <li>Spearheaded <span class="exp-highlight">100+ cross-functional enhancements</span> delivered on-time across distributed teams.</li>
+            <li>Managed vendor integrations across Jira zAgile, LivePerson, Gainsight, and inContact, reducing operational overhead.</li>
+            <li>Built comprehensive metrics and reporting frameworks enabling data-driven executive decision-making.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-period">Dec 2013 — Mar 2019</div>
+          <div class="exp-company">Accenture</div>
+        </div>
+        <div class="exp-content">
+          <h3 class="exp-role">Sr. Business &amp; Integration Architecture Analyst</h3>
+          <ul class="exp-bullets">
+            <li>Led Salesforce Lightning rollout for a major client, driving adoption for <span class="exp-highlight">25,000 users globally</span>.</li>
+            <li>Built New Business Meeting (NBM) Solutions improving sales pipeline by <span class="exp-highlight">more than 15%</span>.</li>
+            <li>Orchestrated CRM infrastructure enhancements integrating platforms and automating manual processes.</li>
+            <li>Served as trusted advisor to multiple stakeholder groups, translating complex requirements into actionable product plans.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Skills</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-category">
+        <div class="skill-cat-title">Product &amp; Strategy</div>
+        <div class="skill-tags">
+          <span class="skill-tag">GTM Strategy</span>
+          <span class="skill-tag">Roadmapping</span>
+          <span class="skill-tag">0-to-1 Products</span>
+          <span class="skill-tag">Agile / Scrum</span>
+          <span class="skill-tag">User Story Definition</span>
+          <span class="skill-tag">Requirements Gathering</span>
+          <span class="skill-tag">KPI &amp; Metrics</span>
+          <span class="skill-tag">Stakeholder Mgmt</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-title">CRM &amp; Platforms</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Salesforce</span>
+          <span class="skill-tag">Jira</span>
+          <span class="skill-tag">Monday.com</span>
+          <span class="skill-tag">ServiceNow</span>
+          <span class="skill-tag">Gainsight</span>
+          <span class="skill-tag">SharePoint</span>
+          <span class="skill-tag">Confluence</span>
+          <span class="skill-tag">Data Loader</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-title">AI &amp; Design</div>
+        <div class="skill-tags">
+          <span class="skill-tag">ChatGPT</span>
+          <span class="skill-tag">Claude</span>
+          <span class="skill-tag">Gemini</span>
+          <span class="skill-tag">Glean</span>
+          <span class="skill-tag">Figma</span>
+          <span class="skill-tag">Lucidchart</span>
+          <span class="skill-tag">Product Design &amp; UX</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-title">Technical</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Apex</span>
+          <span class="skill-tag">SOQL</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">SaaS Development</span>
+          <span class="skill-tag">Tech Stack Rationalisation</span>
+          <span class="skill-tag">Vendor Management</span>
+          <span class="skill-tag">Process Optimisation</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certifications">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Certifications</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="certs-grid">
+      <div class="cert-card">
+        <div class="cert-name">AI Tools Workshop — Be10x</div>
+        <div class="cert-date">May 2026</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-name">Salesforce Sales Cloud Consultant</div>
+        <div class="cert-date">June 2024</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-name">Salesforce Advanced Administrator</div>
+        <div class="cert-date">May 2023</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-name">Salesforce Certified Associate</div>
+        <div class="cert-date">May 2023</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-name">Salesforce Platform App Builder</div>
+        <div class="cert-date">August 2021</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-name">Salesforce Service Cloud Consultant</div>
+        <div class="cert-date">September 2020</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-name">ITIL v4 Certification</div>
+        <div class="cert-date">May 2019</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-name">Salesforce Administrator</div>
+        <div class="cert-date">January 2018</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-name">Business Analysis Foundation — BCS Certified</div>
+        <div class="cert-date">May 2015</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <h2 class="contact-tagline">Let's build something <em>remarkable</em> together.</h2>
+      <p class="contact-sub">Open to senior product and GTM leadership roles globally.</p>
+      <div class="contact-links">
+        <a href="mailto:90shivkumar@gmail.com" class="contact-link">90shivkumar@gmail.com</a>
+        <a href="tel:+919962280214" class="contact-link">+91 99622 80214</a>
+        <a href="https://linkedin.com/in/90shivkumar" target="_blank" class="contact-link">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-copy">© 2026 V. Shiv Kumar — All rights reserved.</span>
+    <span class="footer-copy">Senior AI Product Manager · GTM Systems</span>
+  </footer>
+
+</body>
+</html>
