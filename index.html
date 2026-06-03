@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DXR3ZNF93N"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DXR3ZNF93N');
+</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>V. Shiv Kumar — Senior AI Product Manager</title>
@@ -142,6 +150,24 @@
     footer { padding: 2rem 3rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
     .footer-copy { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--muted); letter-spacing: 0.08em; }
 
+    /* PROJECTS */
+    #projects { background: var(--bg); }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .project-card { background: var(--surface); padding: 2rem; position: relative; overflow: hidden; opacity: 0; transform: translateY(16px); transition: opacity 0.55s ease, transform 0.55s ease, background 0.25s; }
+    .project-card.visible { opacity: 1; transform: translateY(0); }
+    .project-card:hover { background: #161616; }
+    .project-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.35s ease; }
+    .project-card:hover::after { transform: scaleX(1); }
+    .project-card-tag { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+    .project-card-tag.tag-blue { color: var(--accent2); }
+    .project-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; margin-bottom: 0.75rem; letter-spacing: -0.01em; line-height: 1.2; }
+    .project-card p { font-size: 0.88rem; color: #a09890; line-height: 1.75; margin-bottom: 1.25rem; }
+    .project-meta { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; }
+    .project-pill { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.06em; padding: 0.25rem 0.65rem; border: 1px solid var(--border); color: var(--muted); transition: all 0.2s; }
+    .project-card:hover .project-pill { border-color: #2e2e2e; color: #7a7672; }
+    .project-impact { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--accent); letter-spacing: 0.06em; margin-bottom: 1rem; padding: 0.4rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .project-impact.blue { color: var(--accent2); border-color: rgba(126,184,200,0.2); }
+
     @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
     @keyframes fadeIn { from{opacity:0} to{opacity:1} }
 
@@ -164,6 +190,7 @@
     <li><a href="#about">About</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#certifications">Certifications</a></li>
     <li><a href="#philosophy">Philosophy</a></li>
@@ -352,9 +379,80 @@
   </div>
 </section>
 
-<section id="skills">
+<section id="projects">
   <div class="section-header">
     <span class="section-num">03</span>
+    <h2 class="section-title">Key Projects Portfolio</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-card-tag">MongoDB · 2022–2024</div>
+      <h3>Acquisition-to-Growth Handoff Workflow</h3>
+      <div class="project-impact">↓ 75% Sales TAT · Direct Revenue Impact</div>
+      <p>Identified a critical gap where MongoDB was losing cross-sell and upsell opportunities post customer acquisition. Flew to the USA to run on-site requirements workshops, then designed and launched a new Salesforce handoff workflow that eliminated friction between acquisition and growth motions.</p>
+      <div class="project-meta">
+        <span class="project-pill">Salesforce</span><span class="project-pill">Workflow Design</span><span class="project-pill">Revenue Ops</span><span class="project-pill">User Research</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-card-tag tag-blue">Personal Project · 2026</div>
+      <h3>Vibe Coded Sales Tracker App</h3>
+      <div class="project-impact blue">0-to-1 · Solo-built · Shipped end-to-end</div>
+      <p>Built a full sales tracker android app and an admin dashboard from scratch using AI-assisted vibe coding. Designed the UX, wrote the logic, and shipped a working product independently. Demonstrates hands-on product instincts beyond just managing roadmaps: the ability to go from idea to live tool, solo!</p>
+      <div class="project-meta">
+        <span class="project-pill">React</span><span class="project-pill">Claude API</span><span class="project-pill">Vibe Coding</span><span class="project-pill">0-to-1</span><span class="project-pill">Solopreneurship</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-card-tag">MongoDB · 2023</div>
+      <h3>GTM Tech Sprawl Reduction Program</h3>
+      <div class="project-impact">↓ 35% Tools · $500K+ Annual Savings</div>
+      <p>Audited the full GTM, Marketing, and Legal technology stack to identify redundancy and licence overlap. Drove a strategic consolidation program that eliminated roughly a third of all tools while preserving capability — delivering over half a million dollars in verified annual savings.</p>
+      <div class="project-meta">
+        <span class="project-pill">Vendor Strategy</span><span class="project-pill">Cost Optimisation</span><span class="project-pill">GTM Systems</span><span class="project-pill">Stakeholder Mgmt</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-card-tag">MongoDB · 2022–2023</div>
+      <h3>Lead Flow &amp; Conversion Overhaul</h3>
+      <div class="project-impact">↑ 22% Lead Conversion in 2 Quarters</div>
+      <p>Partnered with Marketing Ops to untangle years of accumulated routing logic inside LeanData and Q-Assign. Simplified the end-to-end lead flow, eliminated redundant branching rules, and re-tested assignments — resulting in a 22% lift in lead conversion within two quarters of release.</p>
+      <div class="project-meta">
+        <span class="project-pill">LeanData</span><span class="project-pill">Marketing Ops</span><span class="project-pill">Lead Routing</span><span class="project-pill">Process Redesign</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-card-tag">UKG · 2021</div>
+      <h3>Kronos–UKG Merger CRM Integration</h3>
+      <div class="project-impact">Zero Customer Churn · Zero Operational Disruption</div>
+      <p>Owned the Service Cloud Case Management workstream during the high-stakes Kronos–Ultimate merger, ensuring both customer records and support workflows migrated cleanly to the unified UKG platform. Managed the Kronos Community — independently ranked #2 globally for enterprise Salesforce communities — through the transition.</p>
+      <div class="project-meta">
+        <span class="project-pill">M&amp;A Integration</span><span class="project-pill">Service Cloud</span><span class="project-pill">Change Management</span><span class="project-pill">Community Cloud</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-card-tag">Accenture · 2017–2019</div>
+      <h3>NBM Solutions Framework</h3>
+      <div class="project-impact">↑ 15%+ Qualified Sales Pipeline</div>
+      <p>Designed and built the New Business Meeting (NBM) Solutions framework — a three-pillar model evaluating Desirability, Deliverability, and Winnability for every sales pursuit. Embedded it into the Salesforce workflow, giving sales teams a structured lens for prioritizing and winning deals. Grew the qualified pipeline by over 15%.</p>
+      <div class="project-meta">
+        <span class="project-pill">Sales Enablement</span><span class="project-pill">Framework Design</span><span class="project-pill">Salesforce</span><span class="project-pill">Pipeline Strategy</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-header">
+    <span class="section-num">04</span>
     <h2 class="section-title">Skills</h2>
     <div class="section-line"></div>
   </div>
@@ -388,7 +486,7 @@
 
 <section id="certifications">
   <div class="section-header">
-    <span class="section-num">04</span>
+    <span class="section-num">05</span>
     <h2 class="section-title">Certifications</h2>
     <div class="section-line"></div>
   </div>
@@ -499,7 +597,7 @@ statsObs.observe(document.querySelector('.stats-grid'));
 const revealObs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.12 });
-document.querySelectorAll('.tl-item, .exp-item, .skill-category, .cert-card').forEach(el => revealObs.observe(el));
+document.querySelectorAll('.tl-item, .exp-item, .skill-category, .cert-card, .project-card').forEach(el => revealObs.observe(el));
 </script>
 </body>
 </html>
